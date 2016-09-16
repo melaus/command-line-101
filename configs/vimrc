@@ -1,0 +1,60 @@
+" Use Pathogen
+execute pathogen#infect()
+
+" Enable syntax
+syntax on
+filetype plugin indent on
+
+
+"colorscheme morning
+
+" List of "Vim Tips" articles:
+" http://stevelosh.com/blog/2010/09/coming-home-to-vim/?
+" http://www.moolenaar.net/habits.html
+
+" Remove old vi compatibility
+set nocompatible
+set modelines=0
+
+" set mouse=a
+" set ttymouse=xterm
+
+" Remove whitespace from end of lines
+map <silent> <F4> :%s/\s\+$//g<CR>
+
+" set the tab and autoindent to be 2 spaces
+set expandtab
+set tabstop=2
+set shiftwidth=2
+
+" let's get some line numbaring
+" set number
+
+" delicious light backgrounds!
+"set background=light
+
+" Show us a li'l line where we go over 80 chars.
+" set textwidth=80
+
+set encoding=utf-8
+
+set ruler          " Display where the cursor is (line/col) in bottom right
+" set cursorline     " Line displaying where cursor is
+set number
+" set undofile       " Create <filename>.un~ to allow undos even after file is closed.
+
+" Highlight searches as you type them
+set incsearch
+
+" Make DDL files look like SQL
+"au BufRead,BufNewFile *.ddl setfiletype sql
+
+" Turn rainbow parentheses script on
+au VimEnter * RainbowParenthesesToggle
+" These are necessary to re-load the stuff when syntax changes.
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+"au Syntax * RainbowParenthesesLoadBraces
+"au Syntax * RainbowParenthesesLoadChevrons
+
+let g:vim_markdown_folding_disabled=1

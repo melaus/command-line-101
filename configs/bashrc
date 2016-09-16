@@ -1,0 +1,182 @@
+# Give a name to each terminal window when connected to this server
+case $TERM in
+    xterm*)
+    ## ***replace e with 033 and a with 007 if you're adding this to macOS***
+    echo -en "\e]0;local\a" #-- Set icon name and window title to string
+    echo -en "\e]1;local\a" #-- Set icon name to string
+    echo -en "\e]2;local\a" #-- Set window title to string
+    #precmd () {print -Pn "\e]0;string\a"}
+            ;;
+esac
+
+
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# set editors
+export VISUAL=vim
+export EDITOR=vim
+export PAGER=less
+
+# VIM MODE ON THE COMMAND LINE OMG WAT
+set -o vi
+
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
+# don't put duplicate lines in the history. See bash(1) for more options
+# don't overwrite GNU Midnight Commander's setting of `ignorespace'.
+HISTCONTROL=$HISTCONTROL${HISTCONTROL+:}ignoredups
+# ... or force ignoredups and ignorespace
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# make less more friendly for non-text input files, see lesspipe(1)
+#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+#force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+	# We have color support; assume it's compliant with Ecma-48
+	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+	# a case would tend to support setf rather than setaf.)
+	color_prompt=yes
+    else
+	color_prompt=
+    fi
+fi
+
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    #alias grep='grep --color=auto'
+    #alias fgrep='fgrep --color=auto'
+    #alias egrep='egrep --color=auto'
+fi
+
+# some more ls aliases
+#alias ll='ls -l'
+#alias la='ls -A'
+#alias l='ls -CF'
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+    . /etc/bash_completion
+fi
+
+
+
+# Set path
+PATH="/data/scratch/.local/bin:$HOME/bin:$HOME/.local/bin/:$PATH"
+
+#aliases
+# solarized ls colours
+eval `dircolors ~/.dircolors`
+alias ls="ls --color=auto"
+alias l="ls -lhX"
+alias ll="ls -alhX"
+alias la="ls -alhX"
+alias c="cd -P"
+alias grep="grep --color"
+
+# Git aliases
+alias loggit="git log --graph --pretty=format:'%C(yellow)%h%Creset%C(blue)%d%Creset %s (by %an %ar)' --all"
+
+# Make pretty prompt colours
+# autoload -U colors && colors
+
+# Beautiful Vertica on Command Line
+export VSQL_USER=alan_lau
+alias vsql="vsql -h cam-vertica zeus"
+alias vsqlf="vsql -U $VSQL_USER -F $'\t' -A"
+
+
+# aliases
+alias update_tb="hive -e \"show tables\" | tail -n +2 > ~/tables.tsv"
+alias tb="cat ~/tables.tsv"
+alias fn="cat ~/functions.tsv"
+alias crd='d2r $(date +%Y-%m-%d)'
+
+alias sshbi3='ssh cam-bi-l03'
+
+smiley () {
+        if [ $? -eq 0 ]; then
+                echo -e "\e[1;32m (^.^)\e[0m"
+        else
+                echo -e "\e[1;31m (o.O)\e[0m"
+        fi
+}
+
+gitbranch() {
+local gitbranch_name=$(git rev-parse --abbrev-ref HEAD 2> /dev/null )
+if [ $? -eq 0 ]; then
+     if [ ! "$gitbranch_name" = "" ]; then
+                local changes=""
+                if [ $( git status --porcelain | wc -l ) -gt 0 ]; then
+                        changes="*"
+                fi
+        echo -e " \e[1;34m[${gitbranch_name}${changes}]\e[0m";
+     fi
+fi
+}
+
+#PS1="\u@\h\$(smiley) \$(gitbranch) \e[30;1m\w\e[0m \$(crd)\n\$ "
+# Set command line prompt message
+PS1='\u@\h$(smiley) \e[34;1m$(crd)$(gitbranch) \e[30;1m\w\e[0m\n$ '
+
+# use a TMUX version that is not from the 15th century
+alias tmux='LD_LIBRARY_PATH=/data/scratch/.local/lib/ /data/scratch/.local/bin/tmux'

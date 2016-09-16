@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+if [ $# -eq 1 ]; then
+  #pycol -f $1 | less -S
+  column -n -s'	' -t $1 | less -S
+else
+  #cat | pycol | less -S
+  cat | column -n -s'	' -t $1 | less -S
+fi
