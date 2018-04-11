@@ -21,6 +21,8 @@ export PAGER=less
 
 # VIM MODE ON THE COMMAND LINE OMG WAT
 set -o vi
+# clear screen with vim mode
+bind -m vi-insert "\C-l":clear-screen
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
@@ -178,6 +180,3 @@ fi
 # Set command line prompt message
 #PS1='\u@\h$(smiley) \e[34;1m$(crd)$(gitbranch) \e[30;1m\w\e[0m\n$ '
 PS1='\u@\h$(smiley) \[\033[34;1m\]$(gitbranch) \[\033[01;34m\]\w\[\033[00m\]\n\$ '
-
-# use a TMUX version that is not from the 15th century
-alias tmux='LD_LIBRARY_PATH=/data/scratch/.local/lib/ /data/scratch/.local/bin/tmux'
