@@ -59,7 +59,7 @@ ZSH_THEME="melaus"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git
+  git, pip, pip3
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -106,3 +106,11 @@ alias grep="grep --color"
 
 # enable backward command search
 bindkey '^R' history-incremental-search-backward
+
+# python aliases
+#alias pip="pip3"
+alias ipython="ipython3"
+#alias python="python3"
+
+# export PATH
+export PATH="/home/melaus/.local/bin:$PATH"
