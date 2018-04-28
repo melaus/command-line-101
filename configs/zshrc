@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH=/home/melaus/.oh-my-zsh
+  export ZSH=/home/alan/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -59,7 +59,7 @@ ZSH_THEME="melaus"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git, pip, pip3
+  git 
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -106,11 +106,22 @@ alias grep="grep --color"
 
 # enable backward command search
 bindkey '^R' history-incremental-search-backward
+bindkey "^?" backward-delete-char # fix vim insert mode backspace
 
 # python aliases
-#alias pip="pip3"
+alias pip="pip3"
 alias ipython="ipython3"
-#alias python="python3"
+alias python="python3"
+
+# global sepcific
+export SS_SCHEDULE="http://legacyws.onair.thisisglobal.com/ws/schedule.json"
+export SS_EVENTS="http://legacyws.onair.thisisglobal.com/ws/events.json"
+export SS_KEY="9ddba1de230e6fadc480469a890b3774bbdc32ee"
+
+export GDP_READER="G70b4l-R4d10"
+export NMC_PORTAL="G70b4lR4d10"
 
 # export PATH
 export PATH="/home/melaus/.local/bin:$PATH"
+
+
