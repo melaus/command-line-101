@@ -39,6 +39,12 @@ If you decided to use vim mode in your Command Line prompt (SO GOOOOOD!!), you s
 
 This makes "clear screen" (``Ctrl``+``l``) to perform expectedly.
 
+### .zshrc
+
+Together with [``oh-my-zsh``](http://ohmyz.sh/), ``zsh`` provides a more modern take on the bash environment. Some examples are plugins that enables simple shortcuts to complete actions and case-incensitive autocompletion. Included in the directory ``zsh_custom/themes`` is my personal custom theme. This should be placed under ``$HOME/.oh-my-zsh/custom/themes/``.
+
+
+
 ### Command Line Tools
 
 These are some useful command line tools that I often use:
@@ -229,6 +235,16 @@ This is aimed at projects that uses branches, such as Data Science pipeline proj
 | ``staging``       | ``git merge [your_branch]``            | now you can merge your changes to ``staging``                                                                        |
 | ``staging``       | ``git push origin staging``            | ``origin staging`` is needed so to ensure git knows where to push your changes                                       |
 |                   |                                        | go to Stash and create a pull request, and pray and hope you didn't make any silly mistakes                          |
+
+### Removing Commits
+
+Sometimes, although unwillingly, we need to rewrite the commit history (e.g. committed sentitive info such as password). Here, we assume we can discard any latest work and simply revert to a previous commit. The process to removing specific commits are complicated and could cause serious consequences. This [link](https://www.clock.co.uk/insight/deleting-a-git-commit) explains it in detail. Again, DO THIS WITH CAUTION!
+
+| Command                                   | Description                                                                                                                                   |
+| ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| ``git log``                               | use this to find the commit we want to revert to                                                                                              |
+| ``git reset --hard <commit hash>``        | this takes us back to the corresponding commit                                                                                                |
+| ``git push --force origin <branch name>`` | push the changes back to origin  *THIS OVERWRITES THE REMOTE REPO! CHECK CAUTIOUSLY TO ENSURE YOU'RE DOING THE RIGHT THING BEFORE PROCEEDING!*|
 
 ## SSH
 
